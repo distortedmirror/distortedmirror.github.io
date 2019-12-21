@@ -136,7 +136,7 @@ function initShaders() {
     gl.shaderSource(fragmentShader, fragmentShaderSource);
     gl.compileShader(fragmentShader);
     vertexShader = gl.createShader(gl.VERTEX_SHADER);
-    gl.shaderSource(vertexShader, vertexShaderSource);
+    gl.shaderSource(vertexShader, document.getElementById('txtShaderSource').value);//vertexShaderSource);
     gl.compileShader(vertexShader);
     shaderProgram = gl.createProgram();
     gl.attachShader(shaderProgram, vertexShader);
@@ -220,7 +220,7 @@ fragmentShader=null;
 loadTexture();
 initShaders();
     draw();</textarea>
-  <textarea style="position: fixed; bottom:0px;left:0px;z-index:1234;" onchange="if(confirm('Run\n'+this.value)){vertexShaderSource =this.value;fragmentShader=null;initShaders();}">#define XRATIO 4.0
+  <textarea id="txtShaderSource" style="position: fixed; bottom:0px;left:0px;z-index:1234;" onchange="if(confirm('Run\n'+this.value)){vertexShaderSource =this.value;fragmentShader=null;initShaders();}">#define XRATIO 4.0
 #define YRATIO 4.0
 #define XCYCLE 18.0
 #define YCYCLE 18.0
