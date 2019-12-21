@@ -315,9 +315,9 @@ varying lowp vec2 texUV;
     </div>
     <br>
     <div>
-      <input type="range" id="rangeRotateY" value="0" min="-179" max="179" step="1" style="position: relative; -webkit-transform-origin: 1 1; -webkit-transform: rotateZ(-180deg); width: 105px;" oninput="yy=(parseFloat(this.value==0?yy:this.value)/360.0)*Math.PI; draw();">
-      <input type="range" id="rangeRotateZ" style="position: relative; -webkit-transform: rotateZ(45deg); -webkit-transform-origin: 1 1; MARGIN-TOP: 25PX;" value="0" min="-179" max="179" step="1" oninput="xx=(parseFloat(this.value==0?xx:this.value)/360.0)*Math.PI;draw();">
-      <input type="range" id="rangeRotateX" style="position: relative; -webkit-transform: rotateZ(-90deg); -webkit-transform-origin: 0 0; margin-top: 75px;" value="0" min="-179" max="179" step="1" oninput="zz=(parseFloat(this.value==0?zz:this.value)/360.0)*Math.PI; draw();">
+      <input type="range" id="rangeRotateY" value="0" min="-179" max="179" step="1" style="position: relative; -webkit-transform-origin: 1 1; -webkit-transform: rotateZ(-180deg); width: 105px;" debounce="0" oninput="if(this.getAttribute('debounce')=='1'){return;};this.setAttribute('debounce',1);yy=(parseFloat(this.value==0?yy:this.value)/360.0)*Math.PI; draw();this.setAttribute('debounce',0);">
+      <input type="range" id="rangeRotateZ" style="position: relative; -webkit-transform: rotateZ(45deg); -webkit-transform-origin: 1 1; MARGIN-TOP: 25PX;" value="0" min="-179" max="179" step="1" debounce="0" oninput="if(this.getAttribute('debounce')=='1'){return;}this.setAttribute('debounce',1);xx=(parseFloat(this.value==0?xx:this.value)/360.0)*Math.PI;draw();this.setAttribute('debounce',0);">
+      <input type="range" id="rangeRotateX" style="position: relative; -webkit-transform: rotateZ(-90deg); -webkit-transform-origin: 0 0; margin-top: 75px;" value="0" min="-179" max="179" step="1" debounce="0" oninput="if(this.getAttribute('debounce')=='1'){return;}this.setAttribute('debounce',1);zz=(parseFloat(this.value==0?zz:this.value)/360.0)*Math.PI; draw();this.setAttribute('debounce',0);">
         </div>
   </div>
 </body>
