@@ -305,19 +305,19 @@ varying lowp vec2 texUV;
       <div min="-9999" max="9999" step="1" style="position: absolute; top: 5px; left: 5px; width: 100px; height: 100px; -webkit-transform: rotateY(66deg); background-color: blue; opacity: .5; azimuth: ;">
       </div>
       <br>
-      S:<input type="range" id="rangeScale" value="8" min="0" max="24" step=".25" style="width: 105px;" onchange="ss=this.value;draw();">
+      S:<input type="range" id="rangeScale" value="8" min="0" max="24" step=".25" style="width: 105px;" oninput="ss=this.value;draw();">
       <br>
-      X<input value="-2.5" min="-8" max="8" step="0.25" type="range" onchange="tx=0.000001+parseFloat(this.value);draw();">
+      X<input value="-2.5" min="-8" max="8" step="0.25" type="range" oninput="tx=0.000001+parseFloat(this.value);draw();">
       <br>
-      Y<input value="-1" type="range" max="8" min="-8" step="0.25" onload="this.value=ty;" style="width: 100px;" onchange="ty=0.000001+parseFloat(this.value);draw();">
+      Y<input value="-1" type="range" max="8" min="-8" step="0.25" onload="this.value=ty;" style="width: 100px;" oninput="ty=0.000001+parseFloat(this.value);draw();">
       <br>
-      Z<input value="-12.0" min="-65" max="-5" step=".25" style="width: 100px;" type="range" onchange="tz=0.000001+parseFloat(this.value);draw();">
+      Z<input value="-12.0" min="-65" max="-5" step=".25" style="width: 100px;" type="range" oninput="tz=0.000001+parseFloat(this.value);draw();">
     </div>
     <br>
     <div>
-      <input type="range" id="rangeRotateY" value="0" min="-179" max="179" step="1" style="position: relative; -webkit-transform-origin: 1 1; -webkit-transform: rotateZ(-180deg); width: 105px;" onchange="yy=(parseFloat(this.value==0?yy:this.value)/360.0)*Math.PI; draw();">
-      <input type="range" id="rangeRotateZ" style="position: relative; -webkit-transform: rotateZ(45deg); -webkit-transform-origin: 1 1; MARGIN-TOP: 25PX;" value="0" min="-179" max="179" step="1" onchange="xx=(parseFloat(this.value==0?xx:this.value)/360.0)*Math.PI;draw();">
-      <input type="range" id="rangeRotateX" style="position: relative; -webkit-transform: rotateZ(-90deg); -webkit-transform-origin: 0 0; margin-top: 75px;" value="0" min="-179" max="179" step="1" onchange="zz=(parseFloat(this.value==0?zz:this.value)/360.0)*Math.PI; draw();">
+      <input type="range" id="rangeRotateY" value="0" min="-179" max="179" step="1" style="position: relative; -webkit-transform-origin: 1 1; -webkit-transform: rotateZ(-180deg); width: 105px;" oninput="yy=(parseFloat(this.value==0?yy:this.value)/360.0)*Math.PI; draw();">
+      <input type="range" id="rangeRotateZ" style="position: relative; -webkit-transform: rotateZ(45deg); -webkit-transform-origin: 1 1; MARGIN-TOP: 25PX;" value="0" min="-179" max="179" step="1" oninput="xx=(parseFloat(this.value==0?xx:this.value)/360.0)*Math.PI;draw();">
+      <input type="range" id="rangeRotateX" style="position: relative; -webkit-transform: rotateZ(-90deg); -webkit-transform-origin: 0 0; margin-top: 75px;" value="0" min="-179" max="179" step="1" oninput="zz=(parseFloat(this.value==0?zz:this.value)/360.0)*Math.PI; draw();">
         </div>
   </div>
 </body>
