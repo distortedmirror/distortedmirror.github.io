@@ -69,8 +69,56 @@ var fragmentShaderSource = "precision mediump float;\n" +
     "uniform sampler2D img;\n" +
     "varying lowp vec2 texUV;\n" +
     "varying lowp vec2 waveTimerShade;\n" +
-    "void main(void){gl_FragColor=texture2D(img,texUV);}";
-var vertexShaderSource = "#define XRATIO 0.1\n" +
+"void main(void){gl_FragColor=texture2D(img,texUV);}";
+var vertexShaderSourceIndex=0;
+var vertexShaderSource = [
+"#define XRATIO 4.0\n"+
+"#define YRATIO 4.0\n"+
+"#define XCYCLE 18.0\n"+
+"#define YCYCLE 18.0\n"+
+"attribute vec3 aVertexPosition;\n"+
+"attribute vec2 aTextUV;\n"+
+"uniform vec2 waveTimer;\n"+
+"uniform mat4 uPMatrix;\n"+
+"uniform mat4 uMVMatrix;\n"+
+"varying lowp vec2 waveTimerShade;\n"+
+"varying lowp vec2 texUV;\n"+
+"    void main(void){texUV=aTextUV;waveTimerShade=waveTimer;gl_Position=uPMatrix*uMVMatrix*(vec4(aVertexPosition,1.0)+vec4(0.0,0.0,0.08*sin(3.0*(waveTimer[1] /100.0)*aVertexPosition.x*XRATIO *aVertexPosition.y*YRATIO ),1.0));}\n",
+"#define XRATIO 0.1\n" +
+    "#define YRATIO 0.1\n" +
+    "#define XCYCLE 10.0\n" +
+    "#define YCYCLE 10.0\n" +
+    "attribute vec3 aVertexPosition;\n" +
+    "attribute vec2 aTextUV;\n" +
+    "uniform vec2 waveTimer;\n" +
+    "uniform mat4 uPMatrix;\n" +
+    "uniform mat4 uMVMatrix;\n" +
+    "varying lowp vec2 waveTimerShade;\n" +
+    "varying lowp vec2 texUV;\n" +
+    "void main(void){texUV=aTextUV;" +
+    "waveTimerShade=waveTimer;gl_Position=uPMatrix*uMVMatrix*(vec4(aVertexPosition,1.0)" +
+    "+vec4(0.0,0.0,XRATIO*sin((waveTimer[1] /100.0)*aVertexPosition.x*XCYCLE*3.14)" +
+    ",1.0));" +
+"}",
+
+"#define XRATIO 0.1\n" +
+    "#define YRATIO 0.1\n" +
+    "#define XCYCLE 10.0\n" +
+    "#define YCYCLE 10.0\n" +
+    "attribute vec3 aVertexPosition;\n" +
+    "attribute vec2 aTextUV;\n" +
+    "uniform vec2 waveTimer;\n" +
+    "uniform mat4 uPMatrix;\n" +
+    "uniform mat4 uMVMatrix;\n" +
+    "varying lowp vec2 waveTimerShade;\n" +
+    "varying lowp vec2 texUV;\n" +
+    "void main(void){texUV=aTextUV;" +
+    "waveTimerShade=waveTimer;gl_Position=uPMatrix*uMVMatrix*(vec4(aVertexPosition,1.0)" +
+    "+vec4(0.0,0.0,YRATIO*sin((waveTimer[1] /100.0)*aVertexPosition.y*XCYCLE*3.14)" +
+    ",1.0));" +
+"}",
+
+"#define XRATIO 0.1\n" +
     "#define YRATIO 0.1\n" +
     "#define XCYCLE 10.0\n" +
     "#define YCYCLE 10.0\n" +
@@ -85,7 +133,8 @@ var vertexShaderSource = "#define XRATIO 0.1\n" +
     "waveTimerShade=waveTimer;gl_Position=uPMatrix*uMVMatrix*(vec4(aVertexPosition,1.0)" +
     "+vec4(0.0,0.0,XRATIO*sin((waveTimer[1] /100.0)*aVertexPosition.x*XCYCLE*3.14)+" +
     "YRATIO*cos((waveTimer[0] /100.0)*aVertexPosition.y*YCYCLE*3.14),1.0));" +
-    "}";
+"}"
+];
 
 function loaded() {
     canvas = document.getElementById("canvasMain");
@@ -136,7 +185,7 @@ function initShaders() {
     gl.shaderSource(fragmentShader, fragmentShaderSource);
     gl.compileShader(fragmentShader);
     vertexShader = gl.createShader(gl.VERTEX_SHADER);
-    gl.shaderSource(vertexShader, document.getElementById('txtShaderSource').value);//vertexShaderSource);
+    gl.shaderSource(vertexShader, vertexShaderSource[vertexShaderSourceIndex]);
     gl.compileShader(vertexShader);
     shaderProgram = gl.createProgram();
     gl.attachShader(shaderProgram, vertexShader);
@@ -198,7 +247,13 @@ function loadGeom() {
 </head>
 <body onload="loaded();">
   <div style="position:fixed;top:5px;left:5px;font-family:Verdana;font-weight:bold;z-index:100;font-size:59px;">D1Zt0rT3d M1RR0r</div>
-  <textarea style="position: fixed; bottom:0px;right:0px;z-index:1234;" onchange="if(confirm('Run\n'+this.value)){eval(this.value);}">imgWave.src='gf.mp4';
+  <select style="z-index:10000;position:fixed;bottom:0px;left:25%;width:50%;" onchange="vertexShaderSourceIndex=parseInt(this.selectedIndex);fragmentShader=null;initShaders();">
+    <option value="0" selected>XY Distance Wave</option>
+    <option value="1">X Sine Wave</option>
+    <option value="2">Y Sine Wave</option>
+    <option value="3">XY Sine Wave</option>
+  </select>
+  <textarea style="display:none;position: fixed; bottom:0px;right:0px;z-index:1234;" onchange="if(confirm('Run\n'+this.value)){eval(this.value);}">imgWave.src='gf.mp4';
 STEPS = 122.0;
 WAVEW = 2.0;
 XSCALE = 1.0;
@@ -220,7 +275,8 @@ fragmentShader=null;
 loadTexture();
 initShaders();
     draw();</textarea>
-  <textarea id="txtShaderSource" style="position: fixed; bottom:0px;left:0px;z-index:1234;" onchange="if(confirm('Run\n'+this.value)){vertexShaderSource =this.value;fragmentShader=null;initShaders();}">#define XRATIO 4.0
+  o  <textarea id="txtShaderSource" style="display:none;position: fixed; bottom:0px;left:0px;z-index:1234;" onchange="if(confirm('Run\n'+this.value)){vertexShaderSource =this.value;fragmentShader=null;initShaders();}">
+#define XRATIO 4.0
 #define YRATIO 4.0
 #define XCYCLE 18.0
 #define YCYCLE 18.0
@@ -231,7 +287,8 @@ uniform mat4 uPMatrix;
 uniform mat4 uMVMatrix;
 varying lowp vec2 waveTimerShade;
 varying lowp vec2 texUV;
-void main(void){texUV=aTextUV;waveTimerShade=waveTimer;gl_Position=uPMatrix*uMVMatrix*(vec4(aVertexPosition,1.0)+vec4(0.0,0.0,0.08*sin(3.0*(waveTimer[1] /100.0)*aVertexPosition.x*XRATIO *aVertexPosition.y*YRATIO ),1.0));}</textarea>
+    void main(void){texUV=aTextUV;waveTimerShade=waveTimer;gl_Position=uPMatrix*uMVMatrix*(vec4(aVertexPosition,1.0)+vec4(0.0,0.0,0.08*sin(3.0*(waveTimer[1] /100.0)*aVertexPosition.x*XRATIO *aVertexPosition.y*YRATIO ),1.0));}
+  </textarea>
   <canvas id="canvasMain" style="position: fixed; display: inline; left:0px; top: 0px; opacity: 1; visibility:visible;background-color: transparent;" width="1024" height="1024"></canvas>
   <div style="visibility:hidden;">
     <video preload="auto" autoplay="autoplay" width="1024" height="1024" id="videoRendered" loop="loop" style="opacity: 0.66; background-color: transparent;">
