@@ -307,11 +307,11 @@ varying lowp vec2 texUV;
       <br>
       S:<input type="range" id="rangeScale" value="8" min="0" max="24" step=".25" style="width: 105px;" oninput="ss=this.value;draw();">
       <br>
-      X<input value="-2.5" min="-8" max="8" step="0.25" type="range" oninput="tx=0.000001+parseFloat(this.value);draw();">
+      X<input value="-2.5" min="-8" max="8" step="0.1" type="range" oninput="tx=0.000001+parseFloat(this.value);draw();">
       <br>
-      Y<input value="-1" type="range" max="8" min="-8" step="0.25" onload="this.value=ty;" style="width: 100px;" oninput="ty=0.000001+parseFloat(this.value);draw();">
+      Y<input value="-1" type="range" max="8" min="-8" step="0.1"  style="width: 100px;" oninput="ty=0.000001+parseFloat(this.value);draw();">
       <br>
-      Z<input value="-12.0" min="-65" max="-5" step=".25" style="width: 100px;" type="range" oninput="tz=0.000001+parseFloat(this.value);draw();">
+      Z<input value="-12.0" min="-65" max="-5" step="0.1" style="width: 100px;" type="range" oninput="tz=0.000001+parseFloat(this.value);draw();">
     </div>
     <br>
     <div>
